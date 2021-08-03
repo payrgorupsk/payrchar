@@ -26,9 +26,9 @@ class CreateBlogsTable extends Migration
             $table->integer('views');
             $table->timestamps();
 
-            $table->foreign('author_id')
-                  ->references('id')->on('users')
-                  ->onDelete('cascade');
+            // $table->foreign('author_id')
+            //       ->references('id')->on('users')
+            //       ->onDelete('cascade');
         });
     }
 

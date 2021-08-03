@@ -8,11 +8,12 @@
     .post-new-tab-nav {
         padding-bottom: 0;
     }
-</style> 
+</style>
 @endsection
 @section('content')
 <div class="main_content">
     <div class="main_content_inner">
+        {{-- Testing Git Push --}}
 
         <div class="uk-grid-large" uk-grid>
 
@@ -269,7 +270,7 @@
                     if (value.post_txt != null) {
                         html += '<div class="post-description"><p class="post-text">' + value.post_txt + '</p></div>';
                     }
-                    
+
                     if (value.post_url != null) {
                         html += '<div class="post-description"><a href="'+value.post_url+'" target="_blank">'+value.post_url+'</a></div>';
                     }
@@ -341,7 +342,7 @@
 
     $(document).ready(function () {
         $('.post-add-comment').each(function () {
-          $(this).hide();  
+          $(this).hide();
         });
         $('#view-comment-box').each(function () {
             $(this).hide();
