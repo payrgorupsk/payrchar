@@ -49,7 +49,7 @@
             <div class="social-media">
             </div>
           </form>
-          <form action="{{ route('register') }}" method="post" class="sign-up-form">
+          <form action="{{ url('register-user') }}" method="post" class="sign-up-form">
             @csrf
             <h2 class="title">Sign up</h2>
             <small style="color:red">{{ isset($emptyPhoneAndEmail) ? $emptyPhoneAndEmail : '' }}</small>

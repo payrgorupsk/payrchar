@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-Route::post('register', 'Login\RegisterController@register');
+Route::post('register-user', 'Login\RegisterController@register');
 
 Route::group(['middleware' => ['auth']],function(){
     Route::get('/', 'HomeController@index')->name('home');
@@ -33,6 +33,9 @@ Route::group(['middleware' => ['auth']],function(){
     Route::post('friend-add/{id}', 'Friends\FriendsController@addNewFriend');
     Route::get('search-friends/{id}', 'Friends\FriendsController@findFriends');
     Route::post('change-profile-pic', 'Friends\FriendsController@changeProfilePic');
+    Route::get('friend-requests', 'Friends\FriendsController@showFreindRequests');
+    Route::post('accept-friend-request/{id}', 'Friends\FriendsController@acceptFreindRequests');
+    Route::post('cancel-friend-request/{id}', 'Friends\FriendsController@cancelFriendRequest');
 
     // Blogs Route 
     Route::get('/my/article', 'Blog\BlogController@index')->name('my.articles');
@@ -55,7 +58,7 @@ Route::group(['middleware' => ['auth']],function(){
     Route::get('/terms', 'sidebar\SidebarFooterController@terms');
 
     // Wallet section start
-    Route::get('/wallet/show', 'Wallet\WalletController@showWallet');
+    Route::match(['GET', 'POST'], '/wallet/show', 'Wallet\WalletController@showWallet');
 });
 
 //*********************Admin DashBoard Start**************************
@@ -73,5 +76,11 @@ Route::group(['middleware' => ['Admin']], function() {
     Route::get('/all_users_view', 'Admin\AdminController@seeAllUser')->name('all_users');
     Route::get('/AdminEdit/{id}', 'Admin\AdminController@EditUser')->name('AdminEdit');
     Route::post('/AdminEdit/{id}', 'Admin\AdminController@UpdateUser')->name('AdminEdit');
-    Route::get('pointRest', 'PointController@PointRest')->name('PointRest');
+    // Route::get('pointRest', 'PointController@PointRest')->name('PointRest');
+
+    // Wallet details list show
+    Route::get('/wallet/details/list', 'Admin\AdminController@walletDetailsList')->name('wallet.details.list');
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

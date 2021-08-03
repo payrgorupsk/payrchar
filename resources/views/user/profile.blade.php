@@ -329,14 +329,6 @@
                                 No country has been added
                                 @endif
                             </li>
-                            <!-- <li class="list-group-item">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                                    <path fill="currentColor" d="M12,11.5A2.5,2.5 0 0,1 9.5,9A2.5,2.5 0 0,1 12,6.5A2.5,2.5 0 0,1 14.5,9A2.5,2.5 0 0,1 12,11.5M12,2A7,7 0 0,0 5,9C5,14.25 12,22 12,22C12,22 19,14.25 19,9A7,7 0 0,0 12,2Z">
-                                    </path>
-                                </svg>
-                                <span>Located in Turkey</span>
-                                <iframe width="100%" class="user-location-frame" frameborder="0" style="border:0;margin-top: 10px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBOfpaMO_tMMsuvS2T4zx4llbtsFqMuT9Y&amp;q=Turkey&amp;language=en"></iframe>
-                            </li> -->
                         </ul>
                     </div>
                 </div>
@@ -379,7 +371,7 @@
                 $('.auto-load').hide();
                 $.each(response.data, function (key,value) {
                     var html = "";
-                    html += '<div class="post"><div class="post-heading"><div class="post-avature"><img src="public/uploads/' + value.user.profile_image + '" alt=""></div><div class="post-title"><h4>' + value.user.first_name + ' ' + value.user.last_name + '</h4><p> <i class="uil-users-alt"></i> </p></div><div class="post-btn-action"><span class="icon-more uil-ellipsis-h"></span><div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover "><ul class="uk-nav uk-dropdown-nav"><li><a href="#"> <i class="uil-share-alt mr-1"></i> Share</a> </li><li><a href="#"> <i class="uil-edit-alt mr-1"></i> Edit Post </a></li><li><a href="#"> <i class="uil-comment-slash mr-1"></i> Disable comments</a></li><li><a href="#"> <i class="uil-favorite mr-1"></i> Add favorites </a></li><li><a href="#" class="text-danger"> <i class="uil-trash-alt mr-1"></i>Delete </a></li></ul></div></div></div>';
+                    html += '<div class="post"><div class="post-heading"><div class="post-avature"><img src="' + ENDPOINT + '/public/uploads/' + value.user.profile_image + '" alt="Profile Image"></div><div class="post-title"><h4>' + value.user.first_name + ' ' + value.user.last_name + '</h4><p> <i class="uil-users-alt"></i> </p></div><div class="post-btn-action"><span class="icon-more uil-ellipsis-h"></span><div class="mt-0 p-2" uk-dropdown="pos: bottom-right;mode:hover "><ul class="uk-nav uk-dropdown-nav"><li><a href="#"> <i class="uil-share-alt mr-1"></i> Share</a> </li><li><a href="#"> <i class="uil-edit-alt mr-1"></i> Edit Post </a></li><li><a href="#"> <i class="uil-comment-slash mr-1"></i> Disable comments</a></li><li><a href="#"> <i class="uil-favorite mr-1"></i> Add favorites </a></li><li><a href="#" class="text-danger"> <i class="uil-trash-alt mr-1"></i>Delete </a></li></ul></div></div></div>';
                     if (value.post_txt != null) {
                         html += '<div class="post-description"><p class="post-text">' + value.post_txt + '</p></div>';
                     }
@@ -389,11 +381,11 @@
                     }
 
                     if (value.post_image != null) {
-                        html += '<div class="post-description"><div class="fullsizeimg"><img src="public/uploads/'+ value.post_image + '" alt=""></div></div>';
+                        html += '<div class="post-description"><div class="fullsizeimg"><img src="' + ENDPOINT + '/public/uploads/'+ value.post_image + '" alt="Post Image"></div></div>';
                     }
 
                     if (value.post_video != null) {
-                        html += '<div class="post-description"><div class="embed-responsive embed-responsive-16by9"><video allowfullscreen controls><source src="public/uploads/' + value.post_video + '"></video></div></div>';
+                        html += '<div class="post-description"><div class="embed-responsive embed-responsive-16by9"><video allowfullscreen controls><source src="' + ENDPOINT + '/public/uploads/' + value.post_video + '"></video></div></div>';
                     }
                     html += '<div class="post-state"><div class="post-state-btns" uk-tooltip="like" id="like-div-'+value.id+'" onclick="addLike('+value.id+')"> <i class="uil-heart"></i> <sup id="like-'+value.id+'">'+value.likes.length+'</sup></div><div class="post-state-btns" uk-tooltip="dislike"> <i class="fa fa-heartbeat" aria-hidden="true" id="dislike-div-'+value.id+'" onclick="addDislike('+value.id+')"></i><sup id="dislike-'+value.id+'">'+value.dislikes.length+'</sup></div><div class="post-state-btns" id="comment-button-'+value.id+'" uk-tooltip="comments" onclick="viewCommentBox('+value.id+')"> <i class="uil-comments"></i> <sup>'+value.comments.length+'</sup></div><div class="post-state-btns" uk-tooltip="share"> <i class="fa fa-share-alt-square" aria-hidden="true"></i></div></div></div>';
 

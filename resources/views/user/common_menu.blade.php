@@ -3,7 +3,7 @@
         <ul>
             <li class="{{ $submenu == 'timeline' ? 'uk-active' : '' }}"><a href="{{ url('/profile',Auth::user()->first_name.Auth::user()->last_name) }}">Timeline</a></li>
             <li class="{{ $submenu == 'about' ? 'uk-active' : '' }}"><a href="{{ url('user/about') }}">About</a></li>
-            <li><a href="#">Friend</a></li>
+            <li class="{{ $submenu == 'friend-requests' ? 'uk-active' : '' }}"><a href="{{ url('/friend-requests') }}">Friend Requests</a></li>
             <li><a href="#">Photos</a></li>
             <li><a href="#">Videos</a></li>
         </ul>

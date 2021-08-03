@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="sl_find_frns_user_btns">
                                     <span>
-                                        <button type="button" class="btn button small primary add-friend" data-rel="{{$user->id}}">
+                                        <button type="button" class="btn button small primary add-friend" data-rel="{{$user->id}}" v-on:click="postFriendRequest">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
                                                 <circle cx="8.5" cy="7" r="4"></circle>
@@ -124,7 +124,7 @@
                     } else {
                         html += '<img src="public/uploads/profile/demo-profile.png" alt="Profile image"></a></div>';
                     }
-                    html += '<h4> <a href="">' + v.first_name + ' ' + v.last_name + '</a> </h4> <p></p></div><div class="sl_find_frns_user_btns"><span><button type="button" class="btn button small primary" onclick="addNewFriend(' + v.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg><span id="follow-text-' + v.id + '"> Follow</span></button></span><span><button type="button" class="btn button small light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span> Message</span></button></span></div></div>';
+                    html += '<h4> <a href="">' + v.first_name + ' ' + v.last_name + '</a> </h4> <p></p></div><div class="sl_find_frns_user_btns"><span><button type="button" class="btn button small primary" onclick="addNewFriend(' + v.id + ')"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg><span id="follow-text-' + v.id + '"> Add Friend</span></button></span><span><button type="button" class="btn button small light"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg><span> Message</span></button></span></div></div>';
 
                     $('#follower-section').append(html);
                 });
@@ -136,12 +136,10 @@
         var id = $(this).attr('data-rel');
         newFriend(id);
     });
-
     function addNewFriend(id) {
         var id = id;
         newFriend(id);
     }
-
     function newFriend(id) {
         $.ajax({
             url: ENDPOINT + "/friend-add/" + id,

@@ -52,8 +52,39 @@
                 <a href="{{ url('/profile',Auth::user()->first_name.Auth::user()->last_name) }}" class="opts_icon_link uk-visible@s"> {{ Auth::user()->first_name }} {{ Auth::user()->last_name }} </a>
 
                 <a href="#" class="opts_icon" uk-tooltip="title: Friend Request  ; pos: bottom ;offset:7">
-                    <img src="{{ asset('public/holaTheme/assets/images/icons/friends.png') }}" alt="" style="width: 18px; height: 18px;">
+                    <img src="{{ asset('public/holaTheme/assets/images/icons/friends.png') }}" alt="" style="width: 18px; height: 18px;"><span v-if='friendRequest'>@{{ friendRequest.length }}</span>
                 </a>
+                <!-- Message  notificiation dropdown -->
+                <div uk-dropdown="mode:click ; animation: uk-animation-slide-bottom-small"
+                    class="dropdown-notifications">
+
+                    <!-- notification contents -->
+                    <div class="dropdown-notifications-content" data-simplebar>
+
+                        <!-- notivication header -->
+                        <div class="dropdown-notifications-headline">
+                            <h4>Friend Requests</h4>
+                        </div>
+                        <!-- notiviation list -->
+                        <ul>
+                            <li v-for="friend in friendRequest">
+                                <a href="#">
+                                    <span class="notification-avatar status-online">
+                                        <img v-bind:src="'public/uploads/'+friend.requested_by_user.profile_image" onerror="this.src='public/uploads/profile/demo-profile.png'" alt="" style="max-height: 42px">
+                                    </span>
+                                    <div class="notification-text notification-msg-text">
+                                        <strong>@{{ friend.requested_by_user.first_name }} @{{ friend.requested_by_user.last_name }}</strong>
+                                        <p>sent friend request <span class="time-ago"></span> </p>
+
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div> 
+                    <div class="dropdown-notifications-footer">
+                        <a href="#"> See all in Messages</a>
+                    </div>
+                </div>
 
                 <a href="{{ url('/videos') }}" class="opts_icon" uk-tooltip="title:  Video; pos: bottom ;offset:7">
                     <img src="{{ asset('public/holaTheme/assets/images/icons/movies.png') }}" alt="" style="width: 18px; height: 18px;">
@@ -176,6 +207,7 @@
                     <ul class="dropdown-user-menu">
                         <li><a href="{{ url('/profile',Auth::user()->first_name.Auth::user()->last_name) }}"> <i class="uil-user"></i> My Account </a> </li>
                         <li><a href="{{ url('/user/about') }}"> <i class="uil-cog"></i> Account Settings</a></li>
+
                         <li><a href="{{ url('/wallet/show') }}"> <i class="uil-wallet"></i> Wallet </a></li>
                         <li class="{{ $menu == 'blog' ? 'active' : '' }}"><a href="{{ route('my.articles') }}"> <i class="uil-book"></i> my articles </a></li>
                         </li>
@@ -201,38 +233,3 @@
     </header>
 
 </div>
-
-<!-- For Night mode -->
-<script>
-  (function (window, document, undefined) {
-      'use strict';
-      if (!('localStorage' in window)) return;
-      var nightMode = localStorage.getItem('gmtNightMode');
-      if (nightMode) {
-          document.documentElement.className += ' night-mode';
-      }
-  })(window, document);
-  (function (window, document, undefined) {
-
-      'use strict';
-
-      // Feature test
-      if (!('localStorage' in window)) return;
-
-      // Get our newly insert toggle
-      var nightMode = document.querySelector('#night-mode');
-      if (!nightMode) return;
-
-      // When clicked, toggle night mode on or off
-      nightMode.addEventListener('click', function (event) {
-          event.preventDefault();
-          document.documentElement.classList.toggle('night-mode');
-          if (document.documentElement.classList.contains('night-mode')) {
-              localStorage.setItem('gmtNightMode', true);
-              return;
-          }
-          localStorage.removeItem('gmtNightMode');
-      }, false);
-
-  })(window, document);
-</script>

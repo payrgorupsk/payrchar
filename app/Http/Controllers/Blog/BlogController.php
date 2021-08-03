@@ -69,7 +69,7 @@ class BlogController extends Controller
             $blog->image = $fileNameToStore;
             $blog->save();
 
-            if ($hasWallet == true) {
+            if (!empty($hasWallet)) {
                 $walletPoint = $this->wallet->addPoint('blog', $user_id);
             }
 

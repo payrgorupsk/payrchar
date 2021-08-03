@@ -64,6 +64,25 @@ class User extends Authenticatable
     // Wallet Section
     public function wallets()
     {
-        return $this->hasMany(Wallet::class);
+        return $this->hasMany(Wallet::class, 'user_id');
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
+    }
+
+    public function createUserWallet($userId)
+    {
+        $wallet              = new Wallet();
+        $wallet->user_id     = $userId;
+        $wallet->type_id     = null;
+        $wallet->point       = 0;
+        $wallet->save();
+    }
+
+    public function friends()
+    {
+        return $this->hasMany(Friend::class);
     }
 }

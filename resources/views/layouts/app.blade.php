@@ -65,12 +65,96 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
    <script src="{{ asset('public/holaTheme/assets/js/custom.js') }}"></script>
-    <!-- tinyMC  -->
-    <script src="{{ asset('public/holaTheme/plugin/tinymce/tinymce.min.js') }}"></script>
-    <script src="{{ asset('public/holaTheme/plugin/tinymce/init-tinymce.js') }}"></script>
+   <!-- tinyMC  -->
+   <script src="{{ asset('public/holaTheme/plugin/tinymce/tinymce.min.js') }}"></script>
+   <script src="{{ asset('public/holaTheme/plugin/tinymce/init-tinymce.js') }}"></script>
     
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <!-- For Night mode -->
+   <script>
+   (function (window, document, undefined) {
+         'use strict';
+         if (!('localStorage' in window)) return;
+         var nightMode = localStorage.getItem('gmtNightMode');
+         if (nightMode) {
+            document.documentElement.className += ' night-mode';
+         }
+   })(window, document);
+   (function (window, document, undefined) {
+
+         'use strict';
+
+         // Feature test
+         if (!('localStorage' in window)) return;
+
+         // Get our newly insert toggle
+         var nightMode = document.querySelector('#night-mode');
+         if (!nightMode) return;
+
+         // When clicked, toggle night mode on or off
+         nightMode.addEventListener('click', function (event) {
+            event.preventDefault();
+            document.documentElement.classList.toggle('night-mode');
+            if (document.documentElement.classList.contains('night-mode')) {
+               localStorage.setItem('gmtNightMode', true);
+               return;
+            }
+            localStorage.removeItem('gmtNightMode');
+         }, false);
+
+   })(window, document);
+   </script>
+   <script type="application/javascript" src="{{ asset('public/js/app.js') }}"></script>
+   <script type="application/javascript">
+      var ENDPOINT = "{{ url('/') }}";
+
+      const app = new Vue({
+         el: '#wrapper',
+         data: {
+               user: {!! Auth::check() ? Auth::user()->toJson() : 'null' !!},
+               friendRequest: {}
+         },
+         mounted() {
+               this.getFriendRequests();
+               this.listen();
+         },
+         methods: {
+               getFriendRequests() {
+                  axios.get(ENDPOINT + `/friend-requests`)
+                  .then((response) => {
+                     this.friendRequest = response.data.data;
+                  })
+                  .catch(function (error) {
+                     console.log(error);
+                  })
+               },
+               postFriendRequest(id) {
+                  let csrftoken = "{!! csrf_token() !!}";
+                  let headers = {
+                     "X-CSRFToken": csrftoken,
+                     "Content-Type": "application/x-www-form-urlencoded"
+                  };
+                  let path = ENDPOINT+`/friend-add/`+id.path[0].id.substr(12)
+                  let userId = id.path[0].id.substr(12)
+                  axios.post(path, userId, headers)
+                  .then((response) => {
+                     console.log(response)
+                  })
+                  .catch(function (error) {
+                     console.log(error);
+                  });
+               },
+               listen() {
+                  Echo.channel('friendRequest')
+                        .listen('Friendrequest', (response) => {
+                           this.friendRequest.push(resonse.data);
+                           this.getFriendRequests();
+                        });
+               }
+         }
+      });
+   </script>
    @yield('custom_js')
 </body>
 

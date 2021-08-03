@@ -240,10 +240,18 @@
                     </li>
 
                     <li class="menu">
-                        <a href="{!! route('withdraw-reqtoadmin') !!}" aria-expanded="false" class="dropdown-toggle">
+                        <a href="{{ route('wallet.details.list') }}" aria-expanded="false" class="dropdown-toggle">
                             <div class="">
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm-3.5-8v2H11v2h2v-2h1a2.5 2.5 0 1 0 0-5h-4a.5.5 0 1 1 0-1h5.5V8H13V6h-2v2h-1a2.5 2.5 0 0 0 0 5h4a.5.5 0 1 1 0 1H8.5z" fill="#626262"/></svg>
-                                <span>withdraw Request</span>
+                                <span>Wallet</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu">
+                        <a href="{{ route('withdraw-reqtoadmin') }}" aria-expanded="false" class="dropdown-toggle">
+                            <div class="">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10zm-3.5-8v2H11v2h2v-2h1a2.5 2.5 0 1 0 0-5h-4a.5.5 0 1 1 0-1h5.5V8H13V6h-2v2h-1a2.5 2.5 0 0 0 0 5h4a.5.5 0 1 1 0 1H8.5z" fill="#626262"/></svg>
+                                <span>Withdrawal Reqeuests</span>
                             </div>
                         </a>
                     </li>
@@ -410,5 +418,6 @@
                 checkall('todoAll', 'todochkbox');
                 $('[data-toggle="tooltip"]').tooltip()
             </script>
+            @yield('js')
         </body>
         </html>

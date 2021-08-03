@@ -30,7 +30,7 @@ class HomeController extends Controller
         $followers = Follower::where(['following_id' => Auth::user()->id])->pluck('follower_id')->toArray();
         array_push($followers, Auth::user()->id);
 
-        $posts = Post::with(['user', 'comments.user', 'likes.user', 'dislikes.user'])->whereIn('posts.user_id', $followers)->orderBy('posts.id', 'DESC')->paginate(5);
+        $posts = Post::with(['user', 'comments.user', 'likes.user', 'dislikes.user'])->whereIn('posts.user_id', $followers)->inRandomOrder()->paginate(5);
 
         if ($request->ajax()) {
             return response($posts);
@@ -60,7 +60,7 @@ class HomeController extends Controller
                 $newLike->post_id = $request->id;
                 $newLike->save();
 
-                if ($hasWallet == true) {
+                if (!empty($hasWallet)) {
                     $walletPoint = $this->wallet->addPoint('like', $user_id);
                 }
 
@@ -77,10 +77,6 @@ class HomeController extends Controller
             $newLike->user_id = Auth::user()->id;
             $newLike->post_id = $request->id;
             $newLike->save();
-
-            // if ($hasWallet == true) {
-            //     $walletPoint = $this->wallet->addPoint('like', $user_id);
-            // }
 
             return response(['found_dislike' => 'true']);
         }
@@ -109,7 +105,7 @@ class HomeController extends Controller
                 $newDislike->post_id = $request->id;
                 $newDislike->save();
 
-                if ($hasWallet == true) {
+                if (!empty($hasWallet)) {
                     $walletPoint = $this->wallet->addPoint('dislike', $user_id);
                 }
 
@@ -125,10 +121,6 @@ class HomeController extends Controller
             $newDislike->user_id = Auth::user()->id;
             $newDislike->post_id = $request->id;
             $newDislike->save();
-
-            // if ($hasWallet == true) {
-            //     $walletPoint = $this->wallet->addPoint('dislike', $user_id);
-            // }
 
             return response(['found_like' => 'true']);
         }
@@ -193,7 +185,7 @@ class HomeController extends Controller
 
             $comment->save();
 
-            if ($hasWallet == true && $commentList == false) {
+            if (!empty($hasWallet) && $commentList == false) {
                 $walletPoint = $this->wallet->addPoint('comment', $user_id);
             }
 
